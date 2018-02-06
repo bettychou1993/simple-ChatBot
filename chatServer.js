@@ -1,3 +1,4 @@
+
 /*
 chatServer.js
 Author: David Goedicke (da.goedicke@gmail.com)
@@ -30,8 +31,8 @@ io.on('connect', function(socket) {
   var questionNum = 0; // keep count of question, used for IF condition.
   socket.on('loaded', function(){// we wait until the client has loaded and contacted us that it is ready to go.
 
-  socket.emit('answer',"Hey, Hello I am \"___*-\" a simple chat bot example."); //We start with the introduction;
-  setTimeout(timedQuestion, 2500, socket,"What is your Name?"); // Wait a moment and respond with a question.
+  socket.emit('answer',"Hey, Hello I am Mochi a simple chat bot example."); //We start with the introduction;
+  setTimeout(timedQuestion, 2500, socket,"What do you want me to call you?"); // Wait a moment and respond with a question.
 
 });
   socket.on('message', (data)=>{ // If we get a new message from the client we process it;
@@ -51,35 +52,42 @@ function bot(data,socket,questionNum) {
 
 /// These are the main statments that make up the conversation.
   if (questionNum == 0) {
-  answer= 'Hello ' + input + ' :-)';// output response
+  answer= 'Hey ' + input + ' :D';// output response
   waitTime =2000;
-  question = 'How old are you?';			    	// load next question
+  question = 'How about your age?';			    	// load next question
   }
   else if (questionNum == 1) {
-  answer= 'Really ' + input + ' Years old? So that means you where born in: ' + (2018-parseInt(input));// output response
+  answer= 'Cool! ' + input + ' ! Born in ' + (2018-parseInt(input));// output response
   waitTime =2000;
-  question = 'Where do you live?';			    	// load next question
+  question = 'What is your favorite NFL team? If no type no :)';			    	// load next question
   }
   else if (questionNum == 2) {
-  answer= ' Cool! I have never been to ' + input+'.';
-  waitTime =2000;
-  question = 'Whats your favorite Color?';			    	// load next question
-  }
+	if(input.toLowerCase()!='no' || input===1){
+	answer= ' Cool! I have never had time to watch ' + input+' play';
+  	waitTime =2000;
+  	question = 'What color do you want to wear if you have time to watch the game?';			    	// load next question
+  	} 
+  	else if(input.toLowerCase()==='no'|| input===0){
+	answer =  ' why not try watching the game next time and celebrate with friends :D';
+	waitTime = 2000;
+	question = 'What Color do you want to wear if you have time to watch a NFL game?'
+	}	
+} 
   else if (questionNum == 3) {
   answer= 'Ok, ' + input+' it is.';
   socket.emit('changeBG',input.toLowerCase());
   waitTime = 2000;
-  question = 'Can you still read the font?';			    	// load next question
+  question = 'Do you watch Superbowl this year?';			    	// load next question
   }
   else if (questionNum == 4) {
     if(input.toLowerCase()==='yes'|| input===1){
-      answer = 'Perfect!';
+      answer = 'Awesome! Eagle wins !!!';
       waitTime =2000;
-      question = 'Whats your favorite place?';
+      question = 'Whats your favorite player ?';
     }
     else if(input.toLowerCase()==='no'|| input===0){
-        socket.emit('changeFont','white'); /// we really should look up the inverse of what we said befor.
-        answer='How about now?'
+        socket.emit('changeBG','white'); /// we really should look up the inverse of what we said befor.
+        answer='Maybe watch the highlights online? :D '
         question='';
         waitTime =0;
         questionNum--; // Here we go back in the question number this can end up in a loop
@@ -92,7 +100,7 @@ function bot(data,socket,questionNum) {
   // load next question
   }
   else{
-    answer= 'I have nothing more to say!';// output response
+    answer= input+' is a great player! Thank you for answering :)';// output response
     waitTime =0;
     question = '';
   }

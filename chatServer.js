@@ -86,9 +86,15 @@ function bot(data,socket,questionNum) {
       question = 'Whats your favorite player ?';
     }
     else if(input.toLowerCase()==='no'|| input===0){
+<<<<<<< HEAD
         socket.emit('changeBG','white'); /// we really should look up the inverse of what we said befor.
         answer='Maybe watch the highlights online? :D '
         question='';
+=======
+        socket.emit('changeFont','white'); /// we really should look up the inverse of what we said befor.
+        answer=''
+        question='How about now?';
+>>>>>>> c1b0aa78928c30708053240a86d6151953d8fe34
         waitTime =0;
         questionNum--; // Here we go back in the question number this can end up in a loop
     }else{
